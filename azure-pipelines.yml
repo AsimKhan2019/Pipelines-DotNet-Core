@@ -65,12 +65,12 @@ steps:
     zipAfterPublish: true
 
 
-- script: dotnet test <test-project> --logger trx
-- task: PublishTestResults@2
-  condition: succeededorFailed()
-  inputs:
-    testRunner: VSTest
-    testResultsFiles: '**/*.trx'
+#- script: dotnet test <test-project> --logger trx
+#- task: PublishTestResults@2
+#  condition: succeededorFailed()
+#  inputs:
+#    testRunner: VSTest
+#    testResultsFiles: '**/*.trx'
 
 
 - script: dotnet test <test-project> --logger trx --collect "Code coverage"
@@ -79,7 +79,7 @@ steps:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    artifactName: 'fabrikamWebsite'
+#- task: PublishBuildArtifacts@1
+#  inputs:
+#    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+#    artifactName: 'fabrikamWebsite'
