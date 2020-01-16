@@ -18,6 +18,22 @@ variables:
 #  displayName: 'dotnet build $(buildConfiguration)'
 
 steps:
+- task: DotNetCoreCLI@2
+  displayName: Build
+  inputs:
+    command: build
+    projects: '**/*.csproj'
+    arguments: '--configuration Release' #update this to match your needs 
+
+- task: DotNetCoreCLI@2
+  displayName: 'Install DotNetSay'
+  inputs:
+    command: custom
+    custom: tool
+    arguments: 'install -g dotnetsay'
+
+
+#steps:
 - task: UseDotNet@2
   displayName: 'Install .Net Core SDK'
   inputs:
@@ -29,3 +45,16 @@ steps:
     version: '2.2.x'
     packageType: runtime
 
+- task: DotNetCoreCLI@2
+  inputs:
+    command: test
+    projects: '**/*Tests/*.csproj'
+    arguments: '--configuration $(buildConfiguration)'
+
+
+- script: dotnet test <test-project> --logger trx
+- task: PublishTestResults@2
+  condition: succeededorFailed()
+  inputs:
+    testRunner: VSTest
+    testResultsFiles: '**/*.trx'
